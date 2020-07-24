@@ -5,6 +5,7 @@
 ### New features
 
 * [#70](https://github.com/rubocop-hq/rubocop-ast/pull/70): Add `NextNode` ([@marcandre][])
+* [#x](https://github.com/rubocop-hq/rubocop-ast/pull/x): Add `Source::Range#line_span` ([@marcandre][])
 
 ### Bug fixes
 
