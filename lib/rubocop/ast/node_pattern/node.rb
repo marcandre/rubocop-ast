@@ -8,6 +8,9 @@ module RuboCop
         extend Forwardable
         include ::RuboCop::AST::Descendence
 
+        LITERAL_TYPES = %i[symbol number string].to_set.freeze
+        private_constant :LITERAL_TYPES
+
         ###
         # To be overriden by subclasses
         ###
@@ -53,6 +56,11 @@ module RuboCop
         # @return [Boolean] returns true iff matches variable number of elements
         def variadic?
           arity.is_a?(Range)
+        end
+
+        # @return [Boolean] returns true for nodes having a Ruby literal equivalent
+        def literal?
+          LITERAL_TYPES.include?(type)
         end
 
         # @return [Range] arity as a Range

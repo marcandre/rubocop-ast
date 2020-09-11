@@ -40,7 +40,8 @@ module RuboCop
               emit_subsequence(list)
             end
           end
-          emit_list(:union, begin_t, children, end_t)
+          type = set_optimizable?(children) ? :set : :union
+          emit_list(type, begin_t, children, end_t)
         end
 
         def emit_subsequence(node_list)
@@ -50,6 +51,10 @@ module RuboCop
         end
 
         private
+
+        def set_optimizable?(children)
+          children.all?(&:literal?)
+        end
 
         def n(type, *args)
           Node::MAP[type].new(type, *args)
