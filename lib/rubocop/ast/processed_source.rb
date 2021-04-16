@@ -222,19 +222,19 @@ module RuboCop
       def parser_class(ruby_version)
         case ruby_version
         when 2.4
-          require 'parser/ruby24'
+          require_parser 'ruby24'
           Parser::Ruby24
         when 2.5
-          require 'parser/ruby25'
+          require_parser 'ruby25'
           Parser::Ruby25
         when 2.6
-          require 'parser/ruby26'
+          require_parser 'ruby26'
           Parser::Ruby26
         when 2.7
-          require 'parser/ruby27'
+          require_parser 'ruby27'
           Parser::Ruby27
         when 2.8, 3.0
-          require 'parser/ruby30'
+          require_parser 'ruby30'
           Parser::Ruby30
         else
           raise ArgumentError,
@@ -242,6 +242,14 @@ module RuboCop
         end
       end
       # rubocop:enable Metrics/MethodLength
+
+      def require_parser(path)
+        prev = $VERBOSE
+        $VERBOSE = nil
+        require "parser/#{path}"
+      ensure
+        $VERBOSE = prev
+      end
 
       def create_parser(ruby_version)
         builder = RuboCop::AST::Builder.new
